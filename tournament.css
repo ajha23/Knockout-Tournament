@@ -1,0 +1,14 @@
+.box {
+    display: inline-block;
+    width: 45%;
+    height: 100%;
+    margin: 0px;
+    
+  }
+  .winner {
+    display: inline-block;
+    width: 10%;
+    height: 100%;
+    margin: 0px;
+   
+  }
