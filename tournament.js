@@ -12,9 +12,8 @@ function addTeam() {
         alert('The Team size you specified is not currently supported.');
 }
 
+
 /*-------Main function that create round and their winner  ----------*/
-
-
 function findWinner(teamSize) {
     let eachGroupSize = teamSize / 2,
 
@@ -79,8 +78,7 @@ function playingRoundMatch(playingGroup) {
 function listRenderer(roundlist) {
 
     let ol = document.createElement("ol"); //Creat ol Node.
-    //ul.style.listStyleType = "disc";
-
+    ol.className="animate-top";
     roundlist.forEach(element => {
 
         let li = document.createElement("li"); //Creat li node.

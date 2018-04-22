@@ -10,15 +10,16 @@
 </head>
 
 <body>
-
-    <h1>Knockout Tournament</h1>
-
-    <button id="add" onclick="addTeam()">ADD Team Size</button><br/>
-   
-        <div id="groupA" class="box" style="float: left;" ></div>
-        <div id="winner" class="winner" style="align-self: center"></div>
-        <div id="groupB" class="box" style="float: right;" ></div>
-   
+    <div class="center">
+        <h1 class="animate-top header">Knockout Tournament</h1>
+        <h1 class="animate-zoom header" style="cursor: pointer;" id="add" onclick="addTeam()">Click me to play...</h1>
+        <br/>
+    </div>
+    <div class="flex-container">
+        <div id="groupA"></div>
+        <div id="winner" class="winner"></div>
+        <div id="groupB"></div>
+    </div>
 
 </body>
 
