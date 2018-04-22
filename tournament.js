@@ -6,7 +6,7 @@ function addTeam() {
 
     var teamSize = parseInt(prompt('Number of teams :', 32));
 
-    if (!isNaN(teamSize) && knownTeamSize.includes(teamSize))
+    if (!isNaN(teamSize) && knownTeamSize.includes(teamSize)) // Checking if team size is number only and ensure its included in supported Team Size.
         findWinner(teamSize);
     else
         alert('The Team size you specified is not currently supported.');
@@ -18,12 +18,12 @@ function addTeam() {
 function findWinner(teamSize) {
     let eachGroupSize = teamSize / 2,
 
-        groupA = randomGroupGenerator(Data, eachGroupSize),
-        groupB = randomGroupGenerator(Data, eachGroupSize, groupA);
+        groupA = randomGroupGenerator(Data, eachGroupSize), // Randomly picking teams from Team data and generating Group-A
+        groupB = randomGroupGenerator(Data, eachGroupSize, groupA);// Randomly picking teams from Team data and generating Group-B, Here groupA list is passed to ensure that the randomly picked team for Group-B is not included in Group-A.
 
-        groupsRenderer(groupA, "groupA", "Group- A");
-        groupsRenderer(groupB, "groupB", "Group- B"); // Rendering Groups
-    roundrenderer(eachGroupSize, groupA, groupB);
+        groupsRenderer(groupA, "groupA", "Group- A");// Rendering Group-A
+        groupsRenderer(groupB, "groupB", "Group- B"); // Rendering Group-B
+    roundrenderer(eachGroupSize, groupA, groupB);// Calling roundrenderer to render each round of both groups.
 
 }
 
@@ -33,13 +33,13 @@ async function roundrenderer(eachGroupSize, groupA, groupB) {
         level = 1;
 
     while (0 < round) {
-        let listA = await playingRoundMatch(groupA),
-            listB = await playingRoundMatch(groupB);
+        let listA = await playingRoundMatch(groupA), //Generating Winner of each round of Group-A.
+            listB = await playingRoundMatch(groupB); //Generating Winner of each round of Group-B.
 
-        groupsRenderer(listA, "groupA", level);
-        groupsRenderer(listB, "groupB", level);
-        groupA = listA;
-        groupB = listB;
+        groupsRenderer(listA, "groupA", level); // calling grouprenderer to render list of winner of each round of Group-A.
+        groupsRenderer(listB, "groupB", level); // calling grouprenderer to render list of winner of each round of Group-B.
+        groupA = listA; //assinging winner of previous round to input list of next round of Group-A.
+        groupB = listB; //assinging winner of previous round to input list of next round of Group-B.
         round--;
         level++;
     }
@@ -53,13 +53,13 @@ async function roundrenderer(eachGroupSize, groupA, groupB) {
 /*-------This Function Used for rendering list of winner of each round on UI-------*/
 function groupsRenderer(groupList, divId, ht) {
 
-    let header = document.createElement("H1"),
+    let header = document.createElement("H1"), // Creat H1 node to append header of each round
         headerText = isNaN(ht) ? ht : "Round- " + ht,
-        tn = document.createTextNode(headerText),
-        d = document.getElementById(divId);
+        tn = document.createTextNode(headerText), // Creat text node for header
+        d = document.getElementById(divId);    
 
-    d.appendChild(header.appendChild(tn));
-    d.appendChild(listRenderer(groupList));
+    d.appendChild(header.appendChild(tn));   // Appending text node to h1 node and appending that to group div.
+    d.appendChild(listRenderer(groupList)); // Appending group list as child node to group div(ex-groupA,winner,groupB).
 
 }
 
