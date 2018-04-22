@@ -21,7 +21,8 @@ function findWinner(teamSize) {
         groupA = randomGroupGenerator(Data, eachGroupSize),
         groupB = randomGroupGenerator(Data, eachGroupSize, groupA);
 
-    groupsRenderer(groupA, groupB); // Rendering Groups
+        groupsRenderer(groupA, "groupA", "Group- A");
+        groupsRenderer(groupB, "groupB", "Group- B"); // Rendering Groups
     roundrenderer(eachGroupSize, groupA, groupB);
 
 }
@@ -35,43 +36,30 @@ async function roundrenderer(eachGroupSize, groupA, groupB) {
         let listA = await playingRoundMatch(groupA),
             listB = await playingRoundMatch(groupB);
 
-        groupsRenderer(listA, listB, level);
+        groupsRenderer(listA, "groupA", level);
+        groupsRenderer(listB, "groupB", level);
         groupA = listA;
         groupB = listB;
         round--;
         level++;
     }
 
-    let listA = await playingRoundMatch(groupA.concat(groupB)),
-        header = document.createElement("H1"),
-        headerText = document.createTextNode("Winner !!!"),
-        winner = document.getElementById('winner');
-
-    winner.appendChild(header.appendChild(headerText));
-    winner.appendChild(listRenderer(listA));
+    let listA = await playingRoundMatch(groupA.concat(groupB));
+    groupsRenderer(listA,"winner","Winner !!!");
 
 }
 
 
 /*-------This Function Used for rendering list of winner of each round on UI-------*/
-function groupsRenderer(group1, group2, roundLevel) {
+function groupsRenderer(groupList, divId, ht) {
 
     let header = document.createElement("H1"),
+        headerText = isNaN(ht) ? ht : "Round- " + ht,
+        tn = document.createTextNode(headerText),
+        d = document.getElementById(divId);
 
-        headerText = (roundLevel !== undefined) ? document.createTextNode("Round :" + roundLevel) : document.createTextNode("Group A"),
-        G1 = document.getElementById('group1'),
-        G2 = document.getElementById('group2');
-
-    G1.appendChild(header.appendChild(headerText));
-    G1.appendChild(listRenderer(group1));
-
-    if (group2 !== undefined) {
-        headerText = (roundLevel !== undefined) ? document.createTextNode("Round :" + roundLevel) : document.createTextNode("Group B");
-        G2.appendChild(header.appendChild(headerText));
-        G2.appendChild(listRenderer(group2));
-    }
-
-
+    d.appendChild(header.appendChild(tn));
+    d.appendChild(listRenderer(groupList));
 
 }
 
@@ -115,8 +103,8 @@ function NumberOfRound(eachGroupSize) {
         round++
     }
 
-    return round    /* Final Round That both group winner will play 
-                       so number of round will be increamented by One befor returning total Number of round.*/
+    return round;
+
 }
 
 /*------getWinnerTeam Function accept Array of Teams for given group and return array of winner Teams--------*/
