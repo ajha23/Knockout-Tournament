@@ -3,7 +3,7 @@ let knownTeamSize = [2, 4, 8, 16, 32]
 
 /*------Entry point of the Tournament------------ */
 function addTeam() {
-
+    
     var teamSize = parseInt(prompt('Number of teams :', 32));
 
     if (!isNaN(teamSize) && knownTeamSize.includes(teamSize)) // Checking if team size is number only and ensure its included in supported Team Size.
@@ -20,8 +20,8 @@ function findWinner(teamSize) {
         groupA = randomGroupGenerator(Data, eachGroupSize), // Randomly picking teams from Team data and generating Group-A
         groupB = randomGroupGenerator(Data, eachGroupSize, groupA);// Randomly picking teams from Team data and generating Group-B, Here groupA list is passed to ensure that the randomly picked team for Group-B is not included in Group-A.
 
-        groupsRenderer(groupA, "groupA", "Group- A");// Rendering Group-A
-        groupsRenderer(groupB, "groupB", "Group- B"); // Rendering Group-B
+    groupsRenderer(groupA, "groupA", "Group- A");// Rendering Group-A
+    groupsRenderer(groupB, "groupB", "Group- B"); // Rendering Group-B
     roundrenderer(eachGroupSize, groupA, groupB);// Calling roundrenderer to render each round of both groups.
 
 }
@@ -44,7 +44,7 @@ async function roundrenderer(eachGroupSize, groupA, groupB) {
     }
 
     let listA = await playingRoundMatch(groupA.concat(groupB));
-    groupsRenderer(listA,"winner","Winner !!!");
+    groupsRenderer(listA, "winner", "Winner !!!");
 
 }
 
@@ -52,13 +52,7 @@ async function roundrenderer(eachGroupSize, groupA, groupB) {
 /*-------This Function Used for rendering list of winner of each round on UI-------*/
 function groupsRenderer(groupList, divId, ht) {
 
-    let header = document.createElement("H1"), // Creat H1 node to append header of each round
-        headerText = isNaN(ht) ? ht : "Round- " + ht,
-        tn = document.createTextNode(headerText), // Creat text node for header
-        d = document.getElementById(divId);    
-
-    d.appendChild(header.appendChild(tn));   // Appending text node to h1 node and appending that to group div.
-    d.appendChild(listRenderer(groupList)); // Appending group list as child node to group div(ex-groupA,winner,groupB).
+    document.getElementById(divId).appendChild(listRenderer(groupList, divId, ht)); // Appending group list as child node to group div(ex-groupA,winner,groupB).
 
 }
 
@@ -75,10 +69,18 @@ function playingRoundMatch(playingGroup) {
 
 /*-----Render UI by accepting group containing Array of Teams Info  and returning Unordered HTML List  -----*/
 
-function listRenderer(roundlist) {
+function listRenderer(roundlist, divId, ht) {
+    let header = document.createElement("H1"), // Creat H1 node to append header of each round
+        headerText = isNaN(ht) ? ht : "Round-" + ht,
+        tn = document.createTextNode(headerText), // Creat text node for header
+        ol = document.createElement("ol"); //Creat ol Node.
+    if (divId === "winner") {
+        ol.className = "animate-top";
+    } else {
+        ol.className = divId === "groupA" ? "animate-left" : "animate-right"
+    }
 
-    let ol = document.createElement("ol"); //Creat ol Node.
-    ol.className="animate-top";
+    ol.appendChild(header.appendChild(tn));// Appending text node to h1 node and appending that to ol node.
     roundlist.forEach(element => {
 
         let li = document.createElement("li"); //Creat li node.
