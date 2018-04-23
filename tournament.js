@@ -31,7 +31,7 @@ async function roundrenderer(eachGroupSize, groupA, groupB) {
     let round = NumberOfRound(eachGroupSize),
         level = 1;
 
-    while (0 < round) {
+    while (1 < round) {
         let listA = await playingRoundMatch(groupA), //Generating Winner of each round of Group-A.
             listB = await playingRoundMatch(groupB); //Generating Winner of each round of Group-B.
 
@@ -44,8 +44,9 @@ async function roundrenderer(eachGroupSize, groupA, groupB) {
     }
 
     let listA = await playingRoundMatch(groupA.concat(groupB));
-    listRenderer(listA, "winner", "Winner !!!");
-
+    listRenderer(listA, "winner", "Final");
+    let champion = await playingRoundMatch(listA);
+    listRenderer(champion, "winner", "Winner !!!");
 }
 
 
